@@ -57,8 +57,6 @@ typedef NS_ENUM(NSUInteger, FSCalendarOrientation) {
 
 @property (weak  , nonatomic) UIView                     *contentView;
 @property (weak  , nonatomic) UIView                     *daysContainer;
-@property (weak  , nonatomic) UIView                     *topBorder;
-@property (weak  , nonatomic) UIView                     *bottomBorder;
 @property (weak  , nonatomic) FSCalendarScopeHandle      *scopeHandle;
 @property (weak  , nonatomic) FSCalendarCollectionView   *collectionView;
 @property (weak  , nonatomic) FSCalendarCollectionViewLayout *collectionViewLayout;
@@ -227,20 +225,6 @@ typedef NS_ENUM(NSUInteger, FSCalendarOrientation) {
     self.collectionView = collectionView;
     self.collectionViewLayout = collectionViewLayout;
     
-    if (!FSCalendarInAppExtension) {
-        
-        UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
-        view.backgroundColor = FSCalendarStandardLineColor;
-        [self addSubview:view];
-        self.topBorder = view;
-        
-        view = [[UIView alloc] initWithFrame:CGRectZero];
-        view.backgroundColor = FSCalendarStandardLineColor;
-        [self addSubview:view];
-        self.bottomBorder = view;
-        
-    }
-    
     [self invalidateLayout];
     [self registerMainRunloopObserver];
     
@@ -367,9 +351,7 @@ typedef NS_ENUM(NSUInteger, FSCalendarOrientation) {
             
         }
 
-        _topBorder.frame = CGRectMake(0, -1, self.fs_width, 1);
-        _bottomBorder.frame = CGRectMake(0, self.fs_height, self.fs_width, 1);
-        _scopeHandle.fs_bottom = _bottomBorder.fs_top;
+        _scopeHandle.fs_bottom = self.fs_height;
         
     }
     
